@@ -149,21 +149,16 @@ Public Sub write2Sht(targSht As String, topLeftCell As Range)
         targSht = tmpname
     End If
     
-    Worksheets(targSht).Activate
-    
-    
     If Not pRes.EOF Then
         topLeftCell.Offset(1, 0).CopyFromRecordset res
         
         For i = 0 To res.Fields.Count - 1
-         Cells(1, i + 1).Value = res.Fields(i).Name
+         Worksheets(targSht).Cells(topLeftCell.Row, i + topLeftCell.Column).Value = res.Fields(i).Name
         Next i
     
     Else
         Debug.Print "Not Match Results found!"
     End If
-    
-    Worksheets(tmpname).Activate
 
 End Sub
 
@@ -177,6 +172,3 @@ Public Function thisMonday(ByVal d As Date) As Date
      thisMonday = DateAdd("d", 1 - Weekday(d, vbMonday), d)
     
 End Function
-
-
-
